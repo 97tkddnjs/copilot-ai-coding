@@ -21,15 +21,27 @@ def read_pdf(file):
 
 
 
+def save_sentences_to_txt(sentences, filename="sentences.txt"):
+    with open(filename, "w", encoding="utf-8") as f:
+        for sentence in sentences:
+            f.write(sentence.strip() + "\n")
+
+
 if uploaded_file is not None:
 
     text =  read_pdf(uploaded_file)
     
     print(text)
-    data =text.split('.')
+    data = []
+    data = text.split('.') # 문장 단위로 분리
+    print(data)
+
+    # txt 파일로 저장
+    save_sentences_to_txt(data)
+
     # 텍스트 임베딩 생성
-    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-    embeddings = model.encode(data)
+    model = SentenceTransformer('sentence-transformers/xlm-r-100langs-bert-base-nli-stsb-mean-tokens')
+    embeddings = model.encode(data) # 문장 임베딩 생성
     
     print('debugging ')
     print(embeddings.shape) # shape 는 (문장 수, 임베딩 차원)

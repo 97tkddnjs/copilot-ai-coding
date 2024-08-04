@@ -1,12 +1,35 @@
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from domain.question import question_router
 
 app = FastAPI()
+
+
+origins = [
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/hello")
 def hello():
     return {"message": "안녕하세요 파이보"}
 
+'''
+데이터 저장해야 될 것 같음
+'''
+
+app.include_router(question_router.router)
+
+
+
 if __name__ == "__main__":
-    import uvicorn
+    import uvicorn # type: ignore
     uvicorn.run(app, host="0.0.0.0", port=8000)
