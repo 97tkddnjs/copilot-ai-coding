@@ -7,6 +7,7 @@ app = FastAPI()
 
 origins = [
     "http://127.0.0.1:5173",
+       "http://localhost:5173",
 ]
 
 app.add_middleware(
@@ -20,7 +21,7 @@ app.add_middleware(
 
 @app.get("/hello")
 def hello():
-    return {"message": "안녕하세요 파이보"}
+    return {"message": "안녕하세요 ~~"}
 
 '''
 데이터 저장해야 될 것 같음

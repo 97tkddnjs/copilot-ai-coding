@@ -35,4 +35,5 @@ Base = declarative_base()
 
 
 def get_db():
-    yield DbBase().session()
+    with DbBase() as db:
+        yield db.session
