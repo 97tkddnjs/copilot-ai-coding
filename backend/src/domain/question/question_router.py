@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from database import get_db
 from domain.question import question_schema,  question_crud
 from starlette import status
+from domain.user.user_router import get_current_user
+from models import User
 
 router = APIRouter(
     prefix="/api/question",
@@ -20,7 +22,8 @@ def get_question(db: Session = Depends(get_db)):
     return _question
 
 @router.post("/create", status_code=status.HTTP_204_NO_CONTENT)
-def create_question(question : question_schema.QuestionCreate , db: Session = Depends(get_db)):
+def create_question(question : question_schema.QuestionCreate , db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     print('test==== ',type(question))
-    question_crud.create_question(db, question)
+    question_crud.create_question(db, question,  user=current_user)
+
 

@@ -1,4 +1,4 @@
-from models import Question
+from models import Question, User
 from sqlalchemy.orm import Session
 from domain.question import question_schema 
 from datetime import datetime
@@ -14,12 +14,12 @@ def get_question(db: Session , id : str):
     return _question
 
 
-def create_question(db: Session , question= question_schema.QuestionCreate):
+def create_question(db: Session , question= question_schema.QuestionCreate , user: User = None):
     print('debugging================== ,',question)
     _question = Question(
         title=question.title,
         content=question.content,
-        writer = question.writer,
+        writer = user,
         create_date = datetime.now()
     )
     

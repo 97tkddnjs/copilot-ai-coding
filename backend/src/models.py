@@ -29,5 +29,14 @@ class Answer(Base):
 
     # Relationship to the Question model
     question = relationship("Question", back_populates="answers")
+
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(250), unique=True, nullable=False)
+    password = Column(String(250), nullable=False)
+    email = Column(String(250), unique=True, nullable=True)
+    
     
 
